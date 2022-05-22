@@ -1,34 +1,49 @@
-## Usage
+<div align="center">
+  <h1>Solid.js docmanager</h1>
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+  <p>
+    <strong>A solidjs learning exercise</strong>
+  </p>
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+  <a href="https://solidjs-docmanager.vercel.app">https://solidjs-docmanager.vercel.app</a>
+</div>
 
-```bash
-$ npm install # or pnpm install or yarn install
+A gui for managing documents with a django rest api. No auth/permissions are implemented.
+
+## Setup
+
+1. Install dependencies
+
+```sh
+pnpm install # You can also use yarn or npm
 ```
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+2. Run the app in development mode
 
-## Available Scripts
+```sh
+pnpm run dev
+```
 
-In the project directory, you can run:
+3. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `npm dev` or `npm start`
+## Deploy
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Install the [vercel cli](https://vercel.com/docs/cli)
 
-The page will reload if you make edits.<br>
+```sh
+npm install -g vercel
+```
 
-### `npm run build`
+2. Build the app for production to the `dist` folder
 
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
+```sh
+npm run build
+```
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+3. Deploy the `dist` folder to vercel
+  
+  ```sh
+  vercel dist
+  ```
+<sub>If you're using another provider, don't forget to setup redirects to index.html</sub>
 
-## Deployment
-
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
