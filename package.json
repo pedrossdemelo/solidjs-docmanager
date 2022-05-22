@@ -1,7 +1,7 @@
 {
-  "name": "vite-template-solid",
-  "version": "0.0.0",
-  "description": "",
+  "name": "solidjs-docmanager",
+  "version": "0.0.1",
+  "description": "A solidjs learning exercise",
   "scripts": {
     "start": "vite",
     "dev": "vite",
