@@ -4,6 +4,7 @@ function App() {
       <header>
         <h1>SolidJS</h1>
       </header>
+      <button class="btn loading btn-disabled">Hey</button>
     </div>
   );
 };
