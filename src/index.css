@@ -10,6 +10,12 @@
     --scrollbar-thumb-hover: inset 99px 0px 99px rgba(0, 0, 0, 0.18);
   }
 
+  [data-theme="night"] {
+    --scrollbar-thumb: inset 99px 0px 99px rgba(255, 255, 255, 0.12);
+    --m-scrollbar-thumb: rgba(255, 255, 255, 0.16);
+    --scrollbar-thumb-hover: inset 99px 0px 99px rgba(255, 255, 255, 0.18);
+  }
+
   body {
     @apply min-h-screen;
   }
