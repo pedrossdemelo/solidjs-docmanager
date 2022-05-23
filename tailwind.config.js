@@ -2,7 +2,7 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{jsx,tsx}"],
   theme: {
     fontFamily: {
-      sans: ["'Urbanist'", "'Inter'", "system-ui", "sans-serif"],
+      sans: ["'Urbanist'", "system-ui", "sans-serif"],
     },
     extend: {},
   },
