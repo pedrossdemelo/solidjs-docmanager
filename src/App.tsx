@@ -1,12 +1,14 @@
+import { Router } from "solid-app-router";
+import Hero from "./components/Hero";
+import Nav from "./components/Nav";
+
 function App() {
   return (
-    <div>
-      <header>
-        <h1>SolidJS</h1>
-      </header>
-      <button class="btn loading btn-disabled">Hey</button>
-    </div>
+    <Router>
+      <Nav />
+      <Hero />
+    </Router>
   );
-};
+}
 
 export default App;
