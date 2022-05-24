@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500&display=block");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,11 +17,14 @@
   }
 
   body {
-    @apply min-h-screen;
+    @apply min-h-screen flex flex-col flex-nowrap !overflow-x-hidden;
+  }
+
+  a {
+    @apply font-medium;
   }
 
   * {
-    font-display: optional;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
@@ -51,4 +54,7 @@
       box-shadow: var(--scrollbar-thumb-hover);
     }
   }
+}
+
+@layer components {
 }
