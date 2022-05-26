@@ -7,7 +7,7 @@ import { reqDelegate } from "utils";
 export default function User() {
   const params = useParams<{ email: string }>();
 
-  const [user, { refetch  }] = createResource<TUser, string>(
+  const [user, { refetch }] = createResource<TUser, string>(
     () => params.email,
     email => reqDelegate.Users.get(email)
   );
@@ -23,7 +23,12 @@ export default function User() {
   return (
     <>
       <ErrorBoundary fallback="Not found">
-        <Show when={!!user() && !user.loading} fallback="Loading...">
+        <Show
+          when={!!user() && !user.loading}
+          fallback={
+            <progress class="progress progress-primary w-56 self-center mt-40" />
+          }
+        >
           <UserCard {...user()!} />
         </Show>
       </ErrorBoundary>
