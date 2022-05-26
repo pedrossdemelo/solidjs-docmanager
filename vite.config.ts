@@ -1,10 +1,12 @@
-import { defineConfig } from 'vite';
-import solidPlugin from 'vite-plugin-solid';
+import { defineConfig } from "vite";
+import solidPlugin from "vite-plugin-solid";
+import tsconfigPaths from "vite-tsconfig-paths";
+import visualizer from "rollup-plugin-visualizer";
 
 export default defineConfig({
-  plugins: [solidPlugin()],
+  plugins: [solidPlugin(), tsconfigPaths(), visualizer()],
   build: {
-    target: 'esnext',
+    target: "esnext",
     polyfillDynamicImport: false,
   },
 });
