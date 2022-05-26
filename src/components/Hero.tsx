@@ -1,7 +1,9 @@
 import { createForm } from "@felte/solid";
 import { validator } from "@felte/validator-zod";
+import { useAuth } from "context";
 import { createEffect, createSignal, Show } from "solid-js";
-import { z } from "zod";
+import { object, string } from "zod";
+import type { infer as zInfer } from "zod";
 
 export default (props: any) => {
   return (
@@ -23,27 +25,47 @@ export default (props: any) => {
 
 const [tab, setTab] = createSignal<"login" | "signup">("signup");
 
-const schema = z.object({
-  name: z.string().min(5).max(50),
-  email: z.string().email().max(50),
-  password: z.string().min(8).max(50),
+const schema = object({
+  name: string().min(5).max(50),
+  email: string().email().max(50),
+  password: string().min(8).max(50),
 });
 
 const parseError = (errors: string | null) =>
   errors?.[0].split("String").at(-1);
 
+type Form = zInfer<typeof schema>;
+
 const HeroForm = () => {
-  const { form, errors, isValid, isSubmitting, setFields } = createForm<
-    z.infer<typeof schema>
-  >({
-    onSubmit: async values => {
-      alert(JSON.stringify(values));
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      throw new Error("stop");
-    },
-    onError: errors => alert(errors),
-    extend: validator({ schema }),
-  });
+  const [, userActions] = useAuth();
+  const { form, errors, isValid, isSubmitting, setFields, setErrors } =
+    createForm<Form>({
+      onSubmit: async values => {
+        switch (tab()) {
+          case "login":
+            await userActions.login(values);
+            break;
+          case "signup":
+            await userActions.register(values);
+            break;
+        }
+      },
+      onError: (error: any) => {
+        if (error === "Unknown error") {
+          setErrors({ email: "Unknown error" });
+          return;
+        }
+        if (error?.detail) {
+          const errorMsg = error.detail;
+          if (errorMsg.includes("password")) {
+            setErrors({ password: errorMsg });
+          } else setErrors({ email: errorMsg });
+          return;
+        }
+        setErrors(error);
+      },
+      extend: validator({ schema }),
+    });
 
   createEffect(() => {
     switch (tab()) {
@@ -57,10 +79,10 @@ const HeroForm = () => {
   });
 
   return (
-    <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+    <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl min-h-[calc(460rem/16)] bg-base-100">
       {/* @ts-expect-error */}
       <form use:form class="card-body">
-        <div class="tabs tabs-boxed bg-transparent gap-2 justify-center">
+        <div class="tabs tabs-boxed bg-transparent gap-2 self-center border p-0.5 rounded-[calc(10rem/16)]">
           <a
             onClick={() => setTab("signup")}
             classList={{ "tab-active": tab() === "signup" }}
@@ -110,7 +132,8 @@ const HeroForm = () => {
           <label class="label">
             <span class="label-text">Password</span>
             <span class="label-text-alt text-error">
-              {parseError(errors().password)}
+              {parseError(errors().password) ??
+                "don't use a real password, please"}
             </span>
           </label>
           <input
@@ -130,7 +153,7 @@ const HeroForm = () => {
             </label>
           </Show>
         </div>
-        <div class="form-control mt-6">
+        <div class="form-control justify-end grow mt-6">
           <button
             type="submit"
             classList={{ "btn-disabled": !isValid(), loading: isSubmitting() }}
